@@ -8,3 +8,10 @@ wheels/
 
 # Virtual environments
 .venv
+
+# IDE and local tooling
+.idea/
+pi-session-*.html
+
+# Downloaded datasets
+data/
