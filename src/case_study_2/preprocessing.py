@@ -2,7 +2,7 @@
 
 Choix appliqués :
 - valeurs cumulées + taux entre les deux derniers relevés ;
-- imputation par la médiane du train avec indicateurs de valeurs manquantes ;
+- imputation par la médiane du train ;
 - pas de suppression des outliers et pas de normalisation.
 """
 
@@ -91,11 +91,7 @@ def make_features(history: pd.DataFrame) -> tuple[pd.DataFrame, pd.DataFrame]:
 
 def fit_imputer(train_features: pd.DataFrame) -> SimpleImputer:
     """Apprend les médianes uniquement sur le train pour éviter la fuite."""
-    return SimpleImputer(
-        strategy="median",
-        add_indicator=True,
-        keep_empty_features=True,
-    ).fit(train_features)
+    return SimpleImputer(strategy="median").fit(train_features)
 
 
 def apply_imputer(imputer: SimpleImputer, features: pd.DataFrame) -> pd.DataFrame:

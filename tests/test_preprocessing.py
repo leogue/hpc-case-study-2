@@ -82,7 +82,7 @@ class PreprocessingTests(unittest.TestCase):
         transformed = apply_imputer(imputer, validation)
 
         self.assertEqual(transformed.loc[1, "feature"], 2.0)
-        self.assertEqual(transformed.loc[1, "missingindicator_feature"], 1.0)
+        self.assertEqual(transformed.columns.tolist(), ["feature"])
 
     def test_preprocess_exports_csv_files(self) -> None:
         history = pd.DataFrame(
