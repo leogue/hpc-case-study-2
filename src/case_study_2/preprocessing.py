@@ -106,7 +106,7 @@ def apply_imputer(imputer: SimpleImputer, features: pd.DataFrame) -> pd.DataFram
 
 
 def preprocess(data_dir: Path, output_dir: Path) -> None:
-    """Prétraite train, validation et test puis les exporte en Parquet."""
+    """Prétraite train, validation et test puis les exporte en CSV."""
     snapshots: dict[str, tuple[pd.DataFrame, pd.DataFrame]] = {}
     for split in ("train", "validation", "test"):
         history = read_last_rows(data_dir / f"{split}_operational_readouts.csv")
@@ -117,8 +117,8 @@ def preprocess(data_dir: Path, output_dir: Path) -> None:
 
     for split, (ids, features) in snapshots.items():
         ready = pd.concat([ids, apply_imputer(imputer, features)], axis=1)
-        path = output_dir / f"{split}_features.parquet"
-        ready.to_parquet(path, index=False)
+        path = output_dir / f"{split}_features.csv"
+        ready.to_csv(path, index=False)
         print(f"{split}: {ready.shape[0]} lignes, {ready.shape[1] - 2} features -> {path}")
 
     pd.DataFrame(

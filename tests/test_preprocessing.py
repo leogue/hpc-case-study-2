@@ -9,6 +9,7 @@ from case_study_2.preprocessing import (
     apply_imputer,
     fit_imputer,
     make_features,
+    preprocess,
     read_last_rows,
 )
 
@@ -82,6 +83,31 @@ class PreprocessingTests(unittest.TestCase):
 
         self.assertEqual(transformed.loc[1, "feature"], 2.0)
         self.assertEqual(transformed.loc[1, "missingindicator_feature"], 1.0)
+
+    def test_preprocess_exports_csv_files(self) -> None:
+        history = pd.DataFrame(
+            {
+                "vehicle_id": [1, 1, 2, 2],
+                "time_step": [1.0, 2.0, 1.0, 2.0],
+                "171_0": [1.0, 3.0, 10.0, 14.0],
+            }
+        )
+
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            data_dir = root / "data"
+            output_dir = root / "preprocessed"
+            data_dir.mkdir()
+            for split in ("train", "validation", "test"):
+                history.to_csv(
+                    data_dir / f"{split}_operational_readouts.csv", index=False
+                )
+
+            preprocess(data_dir, output_dir)
+
+            for split in ("train", "validation", "test"):
+                self.assertTrue((output_dir / f"{split}_features.csv").exists())
+                self.assertFalse((output_dir / f"{split}_features.parquet").exists())
 
 
 if __name__ == "__main__":
