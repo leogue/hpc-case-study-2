@@ -1,0 +1,16 @@
+Comparaison des modèles
+========================
+
+Meilleur modèle selon PR-AUC : random_forest
+
+random_forest | PR-AUC=0.0653 | ROC-AUC=0.6706 | F1=0.0000 | precision=0.0000 | recall=0.0000
+confusion matrix: TN=4907, FP=3, FN=136, TP=0
+
+lightgbm | PR-AUC=0.0598 | ROC-AUC=0.6601 | F1=0.0883 | precision=0.0515 | recall=0.3088
+confusion matrix: TN=4137, FP=773, FN=94, TP=42
+
+hist_gradient_boosting | PR-AUC=0.0526 | ROC-AUC=0.6807 | F1=0.0795 | precision=0.0419 | recall=0.7721
+confusion matrix: TN=2508, FP=2402, FN=31, TP=105
+
+logistic_regression | PR-AUC=0.0313 | ROC-AUC=0.5551 | F1=0.0581 | precision=0.0302 | recall=0.7426
+confusion matrix: TN=1669, FP=3241, FN=35, TP=101
